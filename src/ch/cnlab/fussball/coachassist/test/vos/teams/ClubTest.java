@@ -1,4 +1,4 @@
-package ch.cnlab.fussball.coachassist.test.entities.teams;
+package ch.cnlab.fussball.coachassist.test.vos.teams;
 
 import junit.framework.Assert;
 import android.test.AndroidTestCase;
@@ -47,8 +47,8 @@ public class ClubTest extends AndroidTestCase {
 	
 	public void testEquals(){
 		Club clubA1 = new Club(clubName);
-		Club clubA2 = clubA1;
-		Club clubB = new Club(clubName);
+		Club clubA2 = new Club(clubName);
+		Club clubB = new Club("test");
 		Assert.assertTrue(clubA1.equals(clubA2));
 		Assert.assertFalse(clubA1.equals(clubB));
 	}

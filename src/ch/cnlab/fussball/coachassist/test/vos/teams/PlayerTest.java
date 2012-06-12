@@ -1,4 +1,4 @@
-package ch.cnlab.fussball.coachassist.test.entities.teams;
+package ch.cnlab.fussball.coachassist.test.vos.teams;
 
 import junit.framework.Assert;
 import android.test.AndroidTestCase;
