@@ -1,19 +1,22 @@
 package ch.cnlab.fussball.coachassist.test.models;
 
 import android.test.AndroidTestCase;
+import ch.cnlab.fussball.coachassist.models.ModelController;
 import ch.cnlab.fussball.coachassist.models.UserModel;
 import ch.cnlab.fussball.coachassist.test.faking.databasehelper.FakeDatabasehelper;
 import ch.cnlab.fussball.coachassist.test.faking.databasehelper.FakeDatabasehelperForException;
 import ch.cnlab.fussball.coachassist.vos.User;
 
 public class UserModelTest extends AndroidTestCase {
-	FakeDatabasehelper fakeDatabasehelper;
-	FakeDatabasehelperForException fakeDatabasehelperForException;
+	private FakeDatabasehelper fakeDatabasehelper;
+	private FakeDatabasehelperForException fakeDatabasehelperForException;
+    private ModelController modelController;
 
 	protected void setUp() throws Exception {
 		super.setUp();
 		fakeDatabasehelper = new FakeDatabasehelper(getContext());
 		fakeDatabasehelperForException = new FakeDatabasehelperForException(getContext());
+        modelController = ModelController.getInstance();
 	}
 
 	protected void tearDown() throws Exception {
@@ -21,14 +24,14 @@ public class UserModelTest extends AndroidTestCase {
 	}
 
 	public void testGetInstance() {
-		UserModel userModel = UserModel.getInstance(getContext());
+		UserModel userModel = modelController.getUserModel(getContext());
 		assertNotNull(userModel);
-		UserModel userModel2 = UserModel.getInstance(getContext());
+		UserModel userModel2 = modelController.getUserModel(getContext());
 		assertEquals(userModel, userModel2);
 	}
 
 	public void testCreateUser() {
-		UserModel userModel = UserModel.getInstance(getContext());
+		UserModel userModel = modelController.getUserModel(getContext());
 		User user = new User("test@test.ch", "1234");
 		userModel.setHelper(fakeDatabasehelper);
 		userModel.createUser(user);
@@ -37,20 +40,20 @@ public class UserModelTest extends AndroidTestCase {
 	}
 	
 	public void testGetNoUser() {
-		UserModel userModel = UserModel.getInstance(getContext());
+		UserModel userModel = modelController.getUserModel(getContext());
 		userModel.setHelper(fakeDatabasehelper);
 		User user = userModel.getUser();
 		assertNull(user);
 	}
 
 	public void testGetUserExceptionHandling() {
-		UserModel userModel = UserModel.getInstance(getContext());
+		UserModel userModel = modelController.getUserModel(getContext());
 		userModel.setHelper(fakeDatabasehelperForException);
 		assertNull(userModel.getUser());
 	}
 	
 	public void testUserUpdate() {
-		UserModel userModel = UserModel.getInstance(getContext());
+		UserModel userModel = modelController.getUserModel(getContext());
 		userModel.setHelper(fakeDatabasehelper);
 		User user = userModel.getUser();
 		userModel.updateUser(user);
